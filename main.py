@@ -2,7 +2,8 @@ import streamlit as st
 import docx
 import PyPDF2
 
-st.title("Natural Lnaguage to python Converter!")
+from langchain import generate_python_code
+st.title("Natural Lnaguage to python")
 
 def read_txt(file):
     return file.read().decode("utf-8")
@@ -34,4 +35,12 @@ if file is not None:
     st.subheader("Extracted Content:")
     st.text_area("Document Content", content, height=300)
 
+user_input=st.text_area("Enter statement")
 
+if st.button("Submit"):
+    if content:
+        response=generate_python_code(user_input,content)
+        st.subheader("Output:")
+        st.text_area(response)
+    else:
+        st.write("something went wrong")
